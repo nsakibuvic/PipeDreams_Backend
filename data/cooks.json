@@ -1,0 +1,34 @@
+{
+    "monday": [
+        "John",
+        "William",
+        "James",
+        "Charles"
+    ],
+    "tuesday": [
+        "George",
+        "Frank",
+        "Joseph"
+    ],
+    "wednesday": [
+        "Thomas",
+        "Henry",
+        "Robert",
+        "Edward"
+    ],
+    "thursday": [
+        "Clarence",
+        "Richard",
+        "Andrew",
+        "Daniel",
+        "Ernest"
+    ],
+    "friday": [
+        "Albert",
+        "Samuel",
+        "David",
+        "Louis",
+        "Joe",
+        "Charlie"
+    ]
+}
