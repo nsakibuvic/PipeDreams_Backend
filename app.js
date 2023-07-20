@@ -1,8 +1,12 @@
 const fastify = require("fastify");
 const { initializeDatabase,connectToDatabase } = require("./utils/database");
+const customCorsPlugin = require("./utils/cors-plugin"); // Import the custom CORS plugin
 
 // Create a new Fastify instance
 const app = fastify();
+
+// Register the custom CORS plugin. Fastify Cors giving error.
+app.register(customCorsPlugin);
 
 // Connect to MongoDB
 initializeDatabase()
