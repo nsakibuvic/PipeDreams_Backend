@@ -1,10 +1,12 @@
+require('dotenv').config()
+
 const mongodb = require("mongodb");
 const Cooks = require("../data/cooks.json");
 const Waiters = require("../data/waiters.json");
 
 async function connectToDatabase() {
   const client = new mongodb.MongoClient(
-    "uri",
+    process.env.MONGODB_URI,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
