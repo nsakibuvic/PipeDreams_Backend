@@ -1,39 +1,56 @@
-const fastify = require('fastify');
-const { connectToDatabase } = require('./utils/database');
-const Cook = require('./data/cooks.json');
-const Waiter = require('./data/waiters.json');
+const fastify = require("fastify");
+const { initializeDatabase,connectToDatabase } = require("./utils/database");
 
 // Create a new Fastify instance
 const app = fastify();
 
 // Connect to MongoDB
-connectToDatabase()
+initializeDatabase()
   .then(() => {
-    console.log('Connected to database');
+    console.log("Connected to database");
   })
   .catch((error) => {
-    console.error('Error connecting to database:', error);
+    console.error("Error connecting to database:", error);
     process.exit(1);
   });
 
-// Define the /GetCooks API
-app.get('/GetCooks', async (request, reply) => {
-  const Cook = app.mongo.db.collection('cooks');
-  const cooks = await Cook.find().toArray();
-  reply.send(cooks);
-});
+// Route handler for '/GetCooks'
+app.get("/GetCooks", async (request, reply) => {
+  try {
+    // Query the "waiters" collection and retrieve all documents
+    const dbClient = await connectToDatabase();
+    const db = dbClient.db("staff");
+    const waitersCollection = db.collection("cooks");
+    const waitersData = await waitersCollection.find({}).toArray();
+    dbClient.close(); // Close the connection after fetching the data
 
-// Define the /GetWaiters API
-app.get('/GetWaiters', async (request, reply) => {
-  const Waiter = app.mongo.db.collection('waiters');
-  const waiters = await Waiter.find().toArray();
-  reply.send(waiters);
+    reply.send(waitersData);
+  } catch (error) {
+    console.error("Error fetching waiters:", error);
+    reply.code(500).send({ error: "Internal Server Error" });
+  }
+});
+// Route handler for '/GetWaiters'
+app.get("/GetWaiters", async (request, reply) => {
+  try {
+    // Query the "waiters" collection and retrieve all documents
+    const dbClient = await connectToDatabase();
+    const db = dbClient.db("staff");
+    const waitersCollection = db.collection("waiters");
+    const waitersData = await waitersCollection.find({}).toArray();
+    dbClient.close(); // Close the connection after fetching the data
+
+    reply.send(waitersData);
+  } catch (error) {
+    console.error("Error fetching waiters:", error);
+    reply.code(500).send({ error: "Internal Server Error" });
+  }
 });
 
 // Start the server
-app.listen(8000, (err, address) => {
+app.listen({ port: 8000 }, (err, address) => {
   if (err) {
-    console.error('Error starting server:', err);
+    console.error("Error starting server:", err);
     process.exit(1);
   }
   console.log(`Server listening on ${address}`);

@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/cors": "^7.0.0",
+    "@fastify/swagger": "^8.8.0",
     "dotenv": "^16.3.1",
     "fastify": "^4.20.0",
     "mongodb": "^5.7.0",
