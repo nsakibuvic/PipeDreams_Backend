@@ -1,13 +1,9 @@
-const fastify = require("fastify");
+const fastify = require('fastify')()
 const { initializeDatabase,connectToDatabase } = require("./utils/database");
-const customCorsPlugin = require("./utils/cors-plugin"); // Import the custom CORS plugin
+const cors = require('@fastify/cors');
 
-// Create a new Fastify instance
-const app = fastify();
-
-// Register the custom CORS plugin. Fastify Cors giving error.
-app.register(customCorsPlugin);
-
+// Enable CORS for all routes
+fastify.register(cors);
 // Connect to MongoDB
 initializeDatabase()
   .then(() => {
@@ -19,7 +15,7 @@ initializeDatabase()
   });
 
 // Route handler for '/GetCooks'
-app.get("/GetCooks", async (request, reply) => {
+fastify.get("/GetCooks", async (request, reply) => {
   try {
     // Query the "waiters" collection and retrieve all documents
     const dbClient = await connectToDatabase();
@@ -35,7 +31,7 @@ app.get("/GetCooks", async (request, reply) => {
   }
 });
 // Route handler for '/GetWaiters'
-app.get("/GetWaiters", async (request, reply) => {
+fastify.get("/GetWaiters", async (request, reply) => {
   try {
     // Query the "waiters" collection and retrieve all documents
     const dbClient = await connectToDatabase();
@@ -52,7 +48,7 @@ app.get("/GetWaiters", async (request, reply) => {
 });
 
 // Start the server
-app.listen({ port: 8000 }, (err, address) => {
+fastify.listen({ port: 8000 }, (err, address) => {
   if (err) {
     console.error("Error starting server:", err);
     process.exit(1);
