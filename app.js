@@ -14,6 +14,7 @@ initializeDatabase()
 		process.exit(1);
 	});
 
+// Enable Routing
 fastify.register(require("./routes/cooksRoute"));
 fastify.register(require("./routes/waitersRoute"));
 

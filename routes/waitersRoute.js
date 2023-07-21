@@ -14,7 +14,6 @@ const waitersRoutes = async (fastify, options) => {
 
       reply.send(waitersData);
     } catch (error) {
-      console.error("Error fetching waiters:", error);
       reply.code(500).send({ error: "Internal Server Error" });
     }
   });
