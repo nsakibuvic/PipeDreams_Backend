@@ -1,10 +1,18 @@
 # PipeDream_BackEnd
 
-Short description or tagline for your project.
+This app connects to MongoDb and then return 2 apis. 
+
+# Start 
+
+npm run start
+
+# Test 
+
+npm run test
 
 ## Create 2 REST APIs to for waiters and cooks
 
-In this project we are creating 2 apis that will be connected to our front end react app. 
+In this project we have created 2 apis that will be connected to our frontend react app. 
 
 ## Features
 
